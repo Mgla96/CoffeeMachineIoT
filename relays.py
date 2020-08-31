@@ -25,7 +25,7 @@ for i in gpioList:
 
 def mix():
     GPIO.output(21, GPIO.LOW)
-    time.sleep(10)
+    time.sleep(15)
     GPIO.output(21, GPIO.HIGH)
 # Sleep time variables
 
@@ -58,3 +58,4 @@ except KeyboardInterrupt:
     print("Quit")
     # Reset GPIO settings
     GPIO.cleanup()
+
