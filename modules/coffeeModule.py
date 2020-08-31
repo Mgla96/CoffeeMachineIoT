@@ -16,10 +16,11 @@ def execute(command):
     twit=Twitter()
     coffee_choice=twit.getVote()
     brew=BrewCoffee(coffee_choice)
-    #brew.startHotWater()
+
+    brew.startHotWater()
     brew.pourBean()
-    #time.sleep(480) #8 minutes waiting for water to boil
-    #brew.pourWater()
-    #brew.mix()
+    #brew.waitToBoil
+    brew.pourWater()
+    brew.mix()
     #brew.steep()
     return

@@ -3,7 +3,6 @@ import imaplib
 import email
 import os
 import pkgutil
-import os
 from dotenv import load_dotenv
 
 
@@ -14,7 +13,6 @@ class ControlException(Exception):
 class Control():
     def __init__(self, username, password):
         print("------------------------------------------------------")
-        print("-              This file is based off of             -")
         print("-                    SIRI CONTROL                    -")
         print("-           Created by Sanjeet Chatterjee            -")
         print("-      Website: https://medium.com/@thesanjeetc      -")
