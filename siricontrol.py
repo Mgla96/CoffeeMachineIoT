@@ -14,7 +14,7 @@ class Control():
     def __init__(self, username, password):
         print("------------------------------------------------------")
         print("-                    SIRI CONTROL                    -")
-        print("-           Created by Sanjeet Chatterjee            -")
+        print("-          Based Off Of Sanjeet Chatterjee's Code    -")
         print("-      Website: https://medium.com/@thesanjeetc      -")
         print("------------------------------------------------------")
 

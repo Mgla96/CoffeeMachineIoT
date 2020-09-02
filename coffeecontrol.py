@@ -4,29 +4,6 @@ import time
 
 #gpio-5 is 20kg servo
 #gpio-18 is 25kg servo
-'''
-def setAngle(angle,pwm):
-	duty = angle / 18 + 2
-	GPIO.output(pwm, True)
-	pwm.ChangeDutyCycle(duty)
-	time.sleep(1)
-	GPIO.output(pwm, False)
-	pwm.ChangeDutyCycle(0)
-
-def pour(pwm,tm):
-	setAngle(0,pwm)
-	print("pouring hot water")
-	setAngle(90,pwm)
-	time.sleep(tm)
-	setAngle(0,pwm)
-
-def pressButton(pwm):
-    setAngle(0,pwm)
-    print("press button")
-    setAngle(180,pwm)
-    time.sleep(1)
-    setAngle(0,pwm)
-'''
 
 class BrewCoffee():
     def __init__(self, coffeechoice,servo1=None,servo2=None):
