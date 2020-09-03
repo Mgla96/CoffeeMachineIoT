@@ -2,9 +2,6 @@
 import RPi.GPIO as GPIO
 import time
 
-#gpio-5 is 20kg servo
-#gpio-18 is 25kg servo
-
 class BrewCoffee():
     def __init__(self, coffeechoice,servo1=None,servo2=None):
         self.coffeechoice=coffeechoice.lower()
@@ -16,7 +13,6 @@ class BrewCoffee():
         for i in gpioList:
             GPIO.setup(i, GPIO.OUT)
             GPIO.output(i, GPIO.HIGH)
-
         #SETTING UP SERVOS
         #gpio-5 is 20kg servo
         #gpio-18 is 25kg servo
@@ -54,7 +50,6 @@ class BrewCoffee():
             print("Quit pour water")
             # Reset GPIO settings
             GPIO.cleanup()
-        
 
     def pourBean(self):
         print(self.coffeechoice,"was chosen. Pouring the beans")
@@ -69,6 +64,7 @@ class BrewCoffee():
             #self.coffeechoice="darkroast"
     
     def mix(self):
+        print("Mix Coffee")
         #21 is mixer
         try:
             GPIO.output(21, GPIO.LOW)
@@ -82,6 +78,7 @@ class BrewCoffee():
     def waitToBoil(self):
         print("Waiting 8 minutes for water to boil")
         time.sleep(480)
+
     def steep(self):
         print("steeping for 4 minutes")
         time.sleep(240)

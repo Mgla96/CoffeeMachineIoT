@@ -3,20 +3,28 @@
 from coffeecontrol import BrewCoffee
 from twitter import Twitter
 import time
-#This can be anything you want
-moduleName = "coffeeModule"
 
+from luma.core.interface.serial import i2c
+from luma.core.render import canvas
+from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
+
+moduleName = "coffeeModule"
 #All of the words must be heard in order for this module to be executed
 commandWords = ["make","coffee"]
 
 def execute(command):
-    #Write anything you want to be executed when the commandWords are heard
-    #The 'command' parameter is the command you speak
     print("Gathering Twitter Vote")
     twit=Twitter()
     coffee_choice=twit.getVote()
-    brew=BrewCoffee(coffee_choice)
+    
+    serial = i2c(port=1, address=0x3C)
+    device = ssd1306(serial, rotate=0)
+    notify = coffee_choice+" was chosen!"
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((10, 40), notify, fill="white")
 
+    brew=BrewCoffee(coffee_choice)
     brew.startHotWater()
     brew.pourBean()
     #brew.waitToBoil
