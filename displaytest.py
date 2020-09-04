@@ -26,15 +26,13 @@ def displayCoffeeChoice(coffee_choice):
     # Draw the text
     draw.text((0, 0), coffee_choice, font=font, fill=255)
     draw.text((0, 15), "selected!", font=font2, fill=255)
-    
     # Display image
     display.image(image)
     display.show()
     #time.sleep(30)
     #display.fill(0)
     #display.show()
-
-        # Open, resize, and convert image to Black and White
+    # Open, resize, and convert image to Black and White
     image = (
         Image.open('static/images/Poe.jpg')
         .resize((display.width, display.height), Image.BICUBIC)
