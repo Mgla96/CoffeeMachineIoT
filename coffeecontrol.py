@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
+# Import all board pins.
+from board import SCL, SDA
+import busio
+# Import the SSD1306 module.
+import adafruit_ssd1306
+import digitalio
+from PIL import Image, ImageDraw, ImageFont
 
 class BrewCoffee():
-    def __init__(self, coffeechoice,servo1=None,servo2=None):
+    def __init__(self, coffeechoice):
         self.coffeechoice=coffeechoice.lower()
         # Set GPIO numbering mode
         GPIO.setmode(GPIO.BCM)
@@ -13,9 +20,7 @@ class BrewCoffee():
         for i in gpioList:
             GPIO.setup(i, GPIO.OUT)
             GPIO.output(i, GPIO.HIGH)
-        #SETTING UP SERVOS
-        #gpio-5 is 20kg servo
-        #gpio-18 is 25kg servo
+        #SETTING UP SERVOS (gpio-5: 20kg servo) (gpio-18 is 25kg servo)
         # Set pin 5 as an output, and set servo1 as pin 5 as PWM
         GPIO.setup(5,GPIO.OUT)
         self.servo1 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
@@ -61,7 +66,7 @@ class BrewCoffee():
             print("dark roast")
         else:
             print(self.coffeechoice,"is not one of the 3 choices so defaulting to dark")
-            #self.coffeechoice="darkroast"
+            self.coffeechoice="darkroast"
     
     def mix(self):
         print("Mix Coffee")
@@ -83,10 +88,40 @@ class BrewCoffee():
         print("steeping for 4 minutes")
         time.sleep(240)
 
-
+    def displayCoffeeChoice(self, coffee_choice):
+        i2c = busio.I2C(SCL, SDA)
+        display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
+        display.fill(0)
+        display.show()
+        image = Image.new("1", (display.width, display.height))
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 13)
+        font2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 11)
+        draw.text((0, 0), coffee_choice, font=font, fill=255)
+        draw.text((0, 15), "selected!", font=font2, fill=255)
+        display.image(image)
+        display.show()
+        
+    def clearCoffeeChoice(self):
+        i2c = busio.I2C(SCL, SDA)
+        display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
+        display.fill(0)
+        display.show()
     
+    def displayFace(self):
+        i2c = busio.I2C(SCL, SDA)
+        display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
+        display.fill(0)
+        display.show()
+        image = (Image.open('static/images/Poe.jpg').resize((display.width, display.height), Image.BICUBIC).convert("1"))
+        display.image(image)
+        display.show()
 
-    
+
+
+        
+
+        
 
 
     
