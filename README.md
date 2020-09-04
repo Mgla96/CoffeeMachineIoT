@@ -1,7 +1,7 @@
 # FrenchPressIoT
+![Image of OLED Display](static/images/OLEDScreen.png | width=80 )
 
 ### About
-![Image of OLED Display](static/images/OLEDScreen.png)
 This is an automated IoT Coffee Machine I am building that is controlled by a Raspberry pi. When it is activated through a Siri Voice command such as "make coffee", it gathers Twitter activity from the past 24 hours from people tagging my account using the hashtags #darkroast, #mediumroast, or #lightroast and makes coffee with the roast that is voted on the most.
 <br>
 <br>
