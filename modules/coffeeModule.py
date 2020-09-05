@@ -11,9 +11,9 @@ commandWords = ["make","coffee"]
 def execute(command):
     print("Gathering Twitter Vote")
     twit=Twitter()
-    coffee_choice=twit.getVote()
+    coffee_choice,amount_votes=twit.getVote()
     brew=BrewCoffee(coffee_choice)
-    brew.displayCoffeeChoice(coffee_choice)
+    brew.displayCoffeeChoice(coffee_choice,amount_votes)
     #brew.startHotWater()
     #brew.pourBean()
     #brew.waitToBoil

@@ -88,17 +88,19 @@ class BrewCoffee():
         print("steeping for 4 minutes")
         time.sleep(240)
 
-    def displayCoffeeChoice(self, coffee_choice):
+    def displayCoffeeChoice(self, coffee_choice,amount_votes):
+        print(amount_votes)
         i2c = busio.I2C(SCL, SDA)
         display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
         display.fill(0)
         display.show()
         image = Image.new("1", (display.width, display.height))
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 13)
-        font2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 11)
-        draw.text((0, 0), coffee_choice, font=font, fill=255)
-        draw.text((0, 15), "selected!", font=font2, fill=255)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 11)
+        font2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
+        draw.text((0, -3), "Twitter Voted For", font=font, fill=255)
+        draw.text((0, 8), coffee_choice, font=font2, fill=255)
+        draw.text((0, 20), "# votes: "+str(amount_votes), font=font, fill=255)
         display.image(image)
         display.show()
         
