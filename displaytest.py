@@ -8,3 +8,4 @@ if __name__=="__main__":
     print(coffee_choice,amount_votes)
     brew=BrewCoffee(coffee_choice)
     brew.displayCoffeeChoice(coffee_choice,amount_votes)
+    #brew.pourBean()

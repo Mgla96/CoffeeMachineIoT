@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
-# Import all board pins.
+
+import busio
 from board import SCL, SDA
 import busio
 # Import the SSD1306 module.
@@ -55,19 +56,36 @@ class BrewCoffee():
             print("Quit pour water")
             # Reset GPIO settings
             GPIO.cleanup()
-
+    '''
     def pourBean(self):
+        def setAngle(angle,pwm):
+            duty = angle / 18 + 2
+            GPIO.output(5, True)
+            pwm.ChangeDutyCycle(duty)
+            time.sleep(1)
+            GPIO.output(5, False)
+            pwm.ChangeDutyCycle(0)
+        def pour(pwm,tm):
+            setAngle(0,pwm)
+            print("pouring bean")
+            setAngle(2,pwm)
+            time.sleep(tm)
+            setAngle(0,pwm)
         print(self.coffeechoice,"was chosen. Pouring the beans")
         if self.coffeechoice=="lightroast":
             print("light roast")
+            pour(self.servo1,6)
+            #would change servo based on which one
         elif self.coffeechoice=="mediumroast":
             print("medium roast")
+            pour(self.servo1,6)
         elif self.coffeechoice=="darkroast":
             print("dark roast")
+            pour(self.servo1,6)
         else:
             print(self.coffeechoice,"is not one of the 3 choices so defaulting to dark")
             self.coffeechoice="darkroast"
-    
+    '''
     def mix(self):
         print("Mix Coffee")
         #21 is mixer
