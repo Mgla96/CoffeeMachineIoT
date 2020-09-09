@@ -13,27 +13,33 @@ from PIL import Image, ImageDraw, ImageFont
 class BrewCoffee():
     def __init__(self, coffeechoice):
         self.coffeechoice=coffeechoice.lower()
-        # Set GPIO numbering mode
         GPIO.setmode(GPIO.BCM)
         #SETTING UP RELAYS
         gpioList = [26, 19, 13, 6, 12, 16, 20, 21]
-        #21 will be the mixer
         for i in gpioList:
             GPIO.setup(i, GPIO.OUT)
             GPIO.output(i, GPIO.HIGH)
-        #SETTING UP SERVOS (gpio-5: 20kg servo) (gpio-18 is 25kg servo)
-        # Set pin 5 as an output, and set servo1 as pin 5 as PWM
-        GPIO.setup(5,GPIO.OUT)
-        self.servo1 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
+        #SETTING UP SERVOS
+        #Dark Roast
+        GPIO.setup(4,GPIO.OUT)
+        self.servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse    
         self.servo1.start(0)
-        # Set pin 18 as an output, and set servo1 as pin 5 as PWM
-        GPIO.setup(18,GPIO.OUT)
-        self.servo2 = GPIO.PWM(18,50) # Note 5 is pin, 50 = 50Hz pulse
+        #Medium Roast
+        GPIO.setup(5,GPIO.OUT)
+        self.servo2 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
         self.servo2.start(0)
+        #Light Roast
+        GPIO.setup(17,GPIO.OUT)
+        self.servo3 = GPIO.PWM(17,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.servo3.start(0)
+        #Hot Water Pourer (25kg servo)
+        GPIO.setup(18,GPIO.OUT)
+        self.water_pourer_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.water_pourer_servo.start(0)
 
     def startHotWater(self):
         print("starting hot water")
-
+        
     def pourWater(self):
         def setAngle(angle,pwm):
             duty = angle / 18 + 2
@@ -50,13 +56,12 @@ class BrewCoffee():
             setAngle(0,pwm)
         try:
             print("pouring water started")
-            pour(self.servo2,6)
-            self.servo2.stop()
+            pour(self.water_pourer_servo,6)
+            self.water_pourer_servo.stop()
         except:
             print("Quit pour water")
-            # Reset GPIO settings
             GPIO.cleanup()
-    '''
+
     def pourBean(self):
         def setAngle(angle,pwm):
             duty = angle / 18 + 2
@@ -65,30 +70,33 @@ class BrewCoffee():
             time.sleep(1)
             GPIO.output(5, False)
             pwm.ChangeDutyCycle(0)
-        def pour(pwm,tm):
+
+        def pour(pwm):
+            GPIO.output(5,True)
+            for i in range(10):
+                setAngle(0,pwm)
+                setAngle(180,pwm)
             setAngle(0,pwm)
-            print("pouring bean")
-            setAngle(2,pwm)
-            time.sleep(tm)
-            setAngle(0,pwm)
+
         print(self.coffeechoice,"was chosen. Pouring the beans")
-        if self.coffeechoice=="lightroast":
-            print("light roast")
-            pour(self.servo1,6)
-            #would change servo based on which one
+        if self.coffeechoice=="darkroast":
+            pour(self.servo1)
         elif self.coffeechoice=="mediumroast":
             print("medium roast")
-            pour(self.servo1,6)
-        elif self.coffeechoice=="darkroast":
+            pour(self.servo2)
+        elif self.coffeechoice=="lightroast":
             print("dark roast")
-            pour(self.servo1,6)
+            pour(self.servo3)
         else:
-            print(self.coffeechoice,"is not one of the 3 choices so defaulting to dark")
-            self.coffeechoice="darkroast"
-    '''
+            print(self.coffeechoice,"is not one of the 3 choices so defaulting to medium")
+            self.coffeechoice="mediumroast"
+            pour(self.servo2)
+    
     def mix(self):
+        '''
+        GPIO-21 is Mixer
+        '''
         print("Mix Coffee")
-        #21 is mixer
         try:
             GPIO.output(21, GPIO.LOW)
             time.sleep(15)
@@ -99,14 +107,23 @@ class BrewCoffee():
             GPIO.cleanup()
 
     def waitToBoil(self):
+        '''
+        Sets timer to wait for water to boil
+        '''
         print("Waiting 8 minutes for water to boil")
         time.sleep(480)
 
     def steep(self):
+        '''
+        After coffee mixed in french press, sets timer for steeping the beans before the coffee is ready
+        '''
         print("steeping for 4 minutes")
         time.sleep(240)
 
     def displayCoffeeChoice(self, coffee_choice,amount_votes):
+        '''
+        Shows on OLED Screen the coffee choice that was chosen through Twitter
+        '''
         print(amount_votes)
         i2c = busio.I2C(SCL, SDA)
         display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
@@ -123,12 +140,18 @@ class BrewCoffee():
         display.show()
         
     def clearCoffeeChoice(self):
+        '''
+        Clears the Coffee Choice on the OLED Screen
+        '''
         i2c = busio.I2C(SCL, SDA)
         display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
         display.fill(0)
         display.show()
     
     def displayFace(self):
+        '''
+        Displays a face on the OLED Screen for fun
+        '''
         i2c = busio.I2C(SCL, SDA)
         display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
         display.fill(0)

@@ -1,8 +1,13 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
-#gpio-5 is 20kg servo
 #gpio-18 is 25kg servo
+
+#gpio-4,gpio-5,gpio-17, are coffee bean dispensers
+
+#def setServoPulse(pin,ms_on):
+#	pin.write_analog(1023*ms_on/20)
+	
 def setAngle(angle,pwm):
 	duty = angle / 18 + 2
 	GPIO.output(5, True)
@@ -11,11 +16,13 @@ def setAngle(angle,pwm):
 	GPIO.output(5, False)
 	pwm.ChangeDutyCycle(0)
 
-def pour(pwm,tm):
+def pour(pwm):
+	GPIO.output(5,True)
+	for i in range(10):
+		setAngle(0,pwm)
+		setAngle(180,pwm)
 	setAngle(0,pwm)
-	setAngle(360,pwm)
-	time.sleep(tm)
-	setAngle(0,pwm)
+
 
 def pressButton(pwm):
     setAngle(0,pwm)
@@ -26,27 +33,25 @@ def pressButton(pwm):
 
 # Set GPIO numbering mode
 GPIO.setmode(GPIO.BCM)
-# Set pin 5 as an output, and set servo1 as pin 5 as PWM
+GPIO.setup(4,GPIO.OUT)
+servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse
 GPIO.setup(5,GPIO.OUT)
-servo1 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
-# Set pin 18 as an output, and set servo1 as pin 5 as PWM
-GPIO.setup(18,GPIO.OUT)
-servo2 = GPIO.PWM(18,50) # Note 5 is pin, 50 = 50Hz pulse
-#start PWM running, but with value of 0 (pulse off)
+servo2 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
+GPIO.setup(17,GPIO.OUT)
+servo3 = GPIO.PWM(17,50) # Note 17 is pin, 50 = 50Hz pulse
 servo1.start(0)
 servo2.start(0)
+servo3.start(0)
 
-print ("Waiting for 1 seconds")
 time.sleep(1)
-#pouring
-pour(servo1,4)
-#Clean things up at the end
+print("testing dark roast")
+pour(servo1)
 servo1.stop()
-
-'''
-print ("25kg servo")
-pour(servo2,4)
+print("testing medium roast")
+pour(servo2)
 servo2.stop()
-'''
+print("testing light roast")
+pour(servo3)
+servo3.stop()
 GPIO.cleanup()
-print ("Goodbye")
+print ("Complete")

@@ -15,7 +15,7 @@ def execute(command):
     brew=BrewCoffee(coffee_choice)
     brew.displayCoffeeChoice(coffee_choice,amount_votes)
     #brew.startHotWater()
-    #brew.pourBean()
+    brew.pourBean()
     #brew.waitToBoil
     #brew.pourWater()
     #brew.mix()
