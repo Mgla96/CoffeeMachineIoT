@@ -11,8 +11,8 @@ This is an automated IoT Coffee Machine I am building that is controlled by a Ra
 Siri is implemented through SiriControl an open source framework created by Sanjeet Chatterjee.
 
 
-#### Mechanics
-##### Coffee Bean Dispenser
+### Mechanics
+#### Coffee Bean Dispenser
 Each servo controls an individual coffee bean dispenser. 
 
 * GPIO-4 is Dark Roast

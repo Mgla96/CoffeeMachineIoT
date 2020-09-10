@@ -38,9 +38,15 @@ class BrewCoffee():
         self.water_pourer_servo.start(0)
 
     def startHotWater(self):
+        '''
+        Starts boiling water in electric kettle
+        '''
         print("starting hot water")
         
     def pourWater(self):
+        '''
+        Pours hot water into French Press
+        '''
         def setAngle(angle,pwm):
             duty = angle / 18 + 2
             GPIO.output(5, True)
@@ -63,6 +69,9 @@ class BrewCoffee():
             GPIO.cleanup()
 
     def pourBean(self):
+        '''
+        Pours the coffee bean that was selected into French Press
+        '''
         def setAngle(angle,pwm):
             duty = angle / 18 + 2
             GPIO.output(5, True)

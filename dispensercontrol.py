@@ -4,7 +4,6 @@ import time
 #gpio-18 is 25kg servo
 
 #gpio-4,gpio-5,gpio-17, are coffee bean dispensers
-
 #def setServoPulse(pin,ms_on):
 #	pin.write_analog(1023*ms_on/20)
 	

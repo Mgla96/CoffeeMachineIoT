@@ -33,9 +33,8 @@ class Twitter():
                         if choice[typ]>mx[1]:
                             mx[1]=choice[typ]
                             mx[0]=typ
-        print(mx)
+        #print(mx)
         print("people have chosen",mx[0], "as the coffee to make this morning. Starting Brew! Beep Boop")
-        #return mx[0]
         return (mx[0],mx[1])
         '''
         for key in choice.keys():
