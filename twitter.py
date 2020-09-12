@@ -20,8 +20,11 @@ class Twitter():
         for mention in mentions:
             #print(str(mention.id) + "-" + mention.text)
             date = mention.created_at
-            dif = date-current_utc
-            if dif < datetime.timedelta(0):
+            dif = current_utc-date
+            time_delta=datetime.timedelta(days=1)
+            print(dif,time_delta)
+            if dif < time_delta:
+                print("dif<time_delta")
                 text = mention.text.split()
                 for word in text:
                     if word[0]=="#":
@@ -34,9 +37,17 @@ class Twitter():
                             mx[1]=choice[typ]
                             mx[0]=typ
         #print(mx)
-        print("people have chosen",mx[0], "as the coffee to make this morning. Starting Brew! Beep Boop")
-        return (mx[0],mx[1])
+        if mx[0]!="":
+            print("people have chosen",mx[0], "as the coffee to make this morning. Starting Brew! Beep Boop")
+            return (mx[0],mx[1])
+        else:
+            print("nobody voted :(")
+            return (mx[0],mx[1])
         '''
         for key in choice.keys():
             print(key)
         '''
+if __name__=="__main__":
+    twit=Twitter()
+    coffee_choice,amount_votes=twit.getVote()
+    print(coffee_choice,amount_votes)
