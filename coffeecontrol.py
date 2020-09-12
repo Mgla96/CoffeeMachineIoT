@@ -23,15 +23,15 @@ class BrewCoffee():
         #Dark Roast
         GPIO.setup(4,GPIO.OUT)
         self.servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse    
-        self.servo1.start(0)
+        #self.servo1.start(0)
         #Medium Roast
         GPIO.setup(5,GPIO.OUT)
         self.servo2 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
-        self.servo2.start(0)
+        #self.servo2.start(0)
         #Light Roast
         GPIO.setup(17,GPIO.OUT)
         self.servo3 = GPIO.PWM(17,50) # Note 17 is pin, 50 = 50Hz pulse
-        self.servo3.start(0)
+        #self.servo3.start(0)
         #Hot Water Pourer (25kg servo)
         GPIO.setup(18,GPIO.OUT)
         self.water_pourer_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
