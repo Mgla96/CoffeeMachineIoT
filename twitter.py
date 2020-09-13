@@ -18,13 +18,10 @@ class Twitter():
         mx=["",0]
         current_utc = datetime.datetime.utcnow()
         for mention in mentions:
-            #print(str(mention.id) + "-" + mention.text)
             date = mention.created_at
             dif = current_utc-date
             time_delta=datetime.timedelta(days=1)
-            print(dif,time_delta)
             if dif < time_delta:
-                print("dif<time_delta")
                 text = mention.text.split()
                 for word in text:
                     if word[0]=="#":
@@ -36,7 +33,6 @@ class Twitter():
                         if choice[typ]>mx[1]:
                             mx[1]=choice[typ]
                             mx[0]=typ
-        #print(mx)
         if mx[0]!="":
             print("people have chosen",mx[0], "as the coffee to make this morning. Starting Brew! Beep Boop")
             return (mx[0],mx[1])
