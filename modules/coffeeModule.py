@@ -18,11 +18,4 @@ def execute(command):
     brew.closeTop()
     brew.startBrew()
 
-    
-    #brew.startHotWater()
-    #brew.pourBean()
-    #brew.waitToBoil
-    #brew.pourWater()
-    #brew.mix()
-    #brew.steep()
     return

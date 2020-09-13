@@ -23,25 +23,45 @@ class BrewCoffee():
         #Dark Roast
         GPIO.setup(4,GPIO.OUT)
         self.servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse    
-        #self.servo1.start(0)
+        self.servo1.start(0)
         #Medium Roast
         GPIO.setup(5,GPIO.OUT)
         self.servo2 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
-        #self.servo2.start(0)
+        self.servo2.start(0)
         #Light Roast
         GPIO.setup(17,GPIO.OUT)
         self.servo3 = GPIO.PWM(17,50) # Note 17 is pin, 50 = 50Hz pulse
-        #self.servo3.start(0)
+        self.servo3.start(0)
         #Hot Water Pourer (25kg servo)
         GPIO.setup(18,GPIO.OUT)
-        self.water_pourer_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
-        self.water_pourer_servo.start(0)
+        self.close_top_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.close_top_servo.start(0)
+
+        GPIO.setup(8,GPIO.OUT)
+        self.start_brew_servo = GPIO.PWM(8,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.start_brew_servo.start(0)
 
     def startBrew(self):
         '''
         Starts brewing coffee
         '''
         print("starting brew")
+        def setAngle(angle,pwm):
+            duty = angle / 18 + 2
+            GPIO.output(5, True)
+            pwm.ChangeDutyCycle(duty)
+            time.sleep(1)
+            GPIO.output(5, False)
+            pwm.ChangeDutyCycle(0)
+        def start(pwm):
+            setAngle(180,pwm)
+            time.sleep(2)
+            setAngle(0,pwm)
+        try:
+            start(self.start_brew_servo)
+            self.start_brew_servo.stop()
+        except:
+            GPIO.cleanup()
 
     def closeTop(self):
         '''
@@ -55,13 +75,11 @@ class BrewCoffee():
             GPIO.output(5, False)
             pwm.ChangeDutyCycle(0)
         def close(pwm):
-            setAngle(90,pwm)
-            print("closing top")
             setAngle(0,pwm)
             setAngle(90,pwm)
         try:
-            close(self.water_pourer_servo)
-            self.water_pourer_servo.stop()
+            close(self.close_top_servo)
+            self.close_top_servo.stop()
         except:
             GPIO.cleanup()
 
@@ -76,10 +94,8 @@ class BrewCoffee():
             time.sleep(1)
             GPIO.output(5, False)
             pwm.ChangeDutyCycle(0)
-
         def pour(pwm):
-            GPIO.output(5,True)
-            for i in range(10):
+            for _ in range(10):
                 setAngle(0,pwm)
                 setAngle(180,pwm)
             setAngle(0,pwm)
