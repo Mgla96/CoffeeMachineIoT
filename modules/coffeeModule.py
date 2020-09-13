@@ -14,8 +14,13 @@ def execute(command):
     coffee_choice,amount_votes=twit.getVote()
     brew=BrewCoffee(coffee_choice)
     brew.displayCoffeeChoice(coffee_choice,amount_votes)
-    #brew.startHotWater()
     brew.pourBean()
+    brew.closeTop()
+    brew.startBrew()
+
+    
+    #brew.startHotWater()
+    #brew.pourBean()
     #brew.waitToBoil
     #brew.pourWater()
     #brew.mix()

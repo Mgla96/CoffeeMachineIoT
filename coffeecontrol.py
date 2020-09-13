@@ -37,15 +37,15 @@ class BrewCoffee():
         self.water_pourer_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
         self.water_pourer_servo.start(0)
 
-    def startHotWater(self):
+    def startBrew(self):
         '''
-        Starts boiling water in electric kettle
+        Starts brewing coffee
         '''
-        print("starting hot water")
-        
-    def pourWater(self):
+        print("starting brew")
+
+    def closeTop(self):
         '''
-        Pours hot water into French Press
+        Closes Top of Coffee Machine
         '''
         def setAngle(angle,pwm):
             duty = angle / 18 + 2
@@ -54,18 +54,15 @@ class BrewCoffee():
             time.sleep(1)
             GPIO.output(5, False)
             pwm.ChangeDutyCycle(0)
-        def pour(pwm,tm):
-            setAngle(0,pwm)
-            print("pouring hot water")
+        def close(pwm):
             setAngle(90,pwm)
-            time.sleep(tm)
+            print("closing top")
             setAngle(0,pwm)
+            setAngle(90,pwm)
         try:
-            print("pouring water started")
-            pour(self.water_pourer_servo,6)
+            close(self.water_pourer_servo)
             self.water_pourer_servo.stop()
         except:
-            print("Quit pour water")
             GPIO.cleanup()
 
     def pourBean(self):
@@ -100,34 +97,6 @@ class BrewCoffee():
             print(self.coffeechoice,"is not one of the 3 choices so defaulting to medium")
             self.coffeechoice="mediumroast"
             pour(self.servo2)
-    
-    def mix(self):
-        '''
-        GPIO-21 is Mixer
-        '''
-        print("Mix Coffee")
-        try:
-            GPIO.output(21, GPIO.LOW)
-            time.sleep(15)
-            GPIO.output(21, GPIO.HIGH)
-        except:
-            print("Quit mix")
-            # Reset GPIO settings
-            GPIO.cleanup()
-
-    def waitToBoil(self):
-        '''
-        Sets timer to wait for water to boil
-        '''
-        print("Waiting 8 minutes for water to boil")
-        time.sleep(480)
-
-    def steep(self):
-        '''
-        After coffee mixed in french press, sets timer for steeping the beans before the coffee is ready
-        '''
-        print("steeping for 4 minutes")
-        time.sleep(240)
 
     def displayCoffeeChoice(self, coffee_choice,amount_votes):
         '''
@@ -157,6 +126,38 @@ class BrewCoffee():
         display.fill(0)
         display.show()
     
+
+    '''
+    others
+    '''
+    def waitToBoil(self):
+        '''
+        Sets timer to wait for water to boil
+        '''
+        print("Waiting 8 minutes for water to boil")
+        time.sleep(480)
+
+    def steep(self):
+        '''
+        After coffee mixed in french press, sets timer for steeping the beans before the coffee is ready
+        '''
+        print("steeping for 4 minutes")
+        time.sleep(240)
+        
+    def mix(self):
+        '''
+        GPIO-21 is Mixer
+        '''
+        print("Mix Coffee")
+        try:
+            GPIO.output(21, GPIO.LOW)
+            time.sleep(15)
+            GPIO.output(21, GPIO.HIGH)
+        except:
+            print("Quit mix")
+            # Reset GPIO settings
+            GPIO.cleanup()
+
     def displayFace(self):
         '''
         Displays a face on the OLED Screen for fun
@@ -168,6 +169,37 @@ class BrewCoffee():
         image = (Image.open('static/images/Poe.jpg').resize((display.width, display.height), Image.BICUBIC).convert("1"))
         display.image(image)
         display.show()
+    
+    def startHotWater(self):
+        '''
+        Starts boiling water in electric kettle
+        '''
+        print("starting hot water")
+    
+    def pourWater(self):
+        '''
+        Pours hot water into French Press
+        '''
+        def setAngle(angle,pwm):
+            duty = angle / 18 + 2
+            GPIO.output(5, True)
+            pwm.ChangeDutyCycle(duty)
+            time.sleep(1)
+            GPIO.output(5, False)
+            pwm.ChangeDutyCycle(0)
+        def pour(pwm,tm):
+            setAngle(0,pwm)
+            print("pouring hot water")
+            setAngle(90,pwm)
+            time.sleep(tm)
+            setAngle(0,pwm)
+        try:
+            print("pouring water started")
+            pour(self.water_pourer_servo,6)
+            self.water_pourer_servo.stop()
+        except:
+            print("Quit pour water")
+            GPIO.cleanup()
 
 
 
