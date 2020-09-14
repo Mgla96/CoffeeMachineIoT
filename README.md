@@ -58,15 +58,15 @@ Each servo controls an individual coffee bean dispenser. These coffee bean dispe
 * 8-channel Relay
 
 <p align="center">
-<img src="static/gifs/ElectronicContainer.png" width="50%" alt="png">
+<img src="static/images/ElectronicContainer.png" width="50%" alt="png">
 </p>
 
 The breadboard has a separate power supply which powers the servos and oled display. The servos signal wire is placed in the breadboard where it connected to a resistor and to it's respective GPIO pin on the Raspberry Pi.
 <p align="center">
-<img src="static/gifs/Breadboard.png" width="50%" alt="png">
+<img src="static/images/Breadboard.png" width="50%" alt="png">
 </p>
 <p align="center">
-<img src="static/gifs/RaspberryPi.png" width="50%" alt="png">
+<img src="static/images/RaspberryPi.png" width="50%" alt="png">
 </p>
 <br>
 <br>
