@@ -47,7 +47,7 @@ Each servo controls an individual coffee bean dispenser. These coffee bean dispe
 
 * OLED Screen - [Thingiverse STL Link](https://www.thingiverse.com/thing:2176764) 
 * Custom Servo Mount - See stls Folder
-* Custom Servo Closing Stick - See stls Folder
+* Custom Servo Closing Lever - See stls Folder
 
 ### Demonstration Video
 
