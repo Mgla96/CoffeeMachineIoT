@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 import RPi.GPIO as GPIO
 import time
-
 import busio
 from board import SCL, SDA
 import busio
-# Import the SSD1306 module.
 import adafruit_ssd1306
 import digitalio
 from PIL import Image, ImageDraw, ImageFont
@@ -26,37 +24,38 @@ class BrewCoffee():
         self.servo1.start(0)
         #Medium Roast
         GPIO.setup(5,GPIO.OUT)
-        self.servo2 = GPIO.PWM(5,50) # Note 5 is pin, 50 = 50Hz pulse
+        self.servo2 = GPIO.PWM(5,50) 
         self.servo2.start(0)
         #Light Roast
         GPIO.setup(17,GPIO.OUT)
-        self.servo3 = GPIO.PWM(17,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.servo3 = GPIO.PWM(17,50) 
         self.servo3.start(0)
-        #Hot Water Pourer (25kg servo)
+       
         GPIO.setup(18,GPIO.OUT)
-        self.close_top_servo = GPIO.PWM(18,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.close_top_servo = GPIO.PWM(18,50) 
         self.close_top_servo.start(0)
 
         GPIO.setup(8,GPIO.OUT)
-        self.start_brew_servo = GPIO.PWM(8,50) # Note 17 is pin, 50 = 50Hz pulse
+        self.start_brew_servo = GPIO.PWM(8,50)
         self.start_brew_servo.start(0)
-
-    def startBrew(self):
-        '''
-        Starts brewing coffee
-        '''
-        print("starting brew")
-        def setAngle(angle,pwm):
+    
+    def setAngle(self,angle,pwm):
             duty = angle / 18 + 2
             GPIO.output(5, True)
             pwm.ChangeDutyCycle(duty)
             time.sleep(1)
             GPIO.output(5, False)
             pwm.ChangeDutyCycle(0)
+
+    def startBrew(self):
+        '''
+        Starts brewing coffee
+        '''
+        print("starting brew")
         def start(pwm):
-            setAngle(180,pwm)
+            self.setAngle(180,pwm)
             time.sleep(2)
-            setAngle(0,pwm)
+            self.setAngle(0,pwm)
         try:
             start(self.start_brew_servo)
             self.start_brew_servo.stop()
@@ -67,16 +66,9 @@ class BrewCoffee():
         '''
         Closes Top of Coffee Machine
         '''
-        def setAngle(angle,pwm):
-            duty = angle / 18 + 2
-            GPIO.output(5, True)
-            pwm.ChangeDutyCycle(duty)
-            time.sleep(1)
-            GPIO.output(5, False)
-            pwm.ChangeDutyCycle(0)
         def close(pwm):
-            setAngle(0,pwm)
-            setAngle(90,pwm)
+            self.setAngle(0,pwm)
+            self.setAngle(90,pwm)
         try:
             close(self.close_top_servo)
             self.close_top_servo.stop()
@@ -87,19 +79,11 @@ class BrewCoffee():
         '''
         Pours the coffee bean that was selected into French Press
         '''
-        def setAngle(angle,pwm):
-            duty = angle / 18 + 2
-            GPIO.output(5, True)
-            pwm.ChangeDutyCycle(duty)
-            time.sleep(1)
-            GPIO.output(5, False)
-            pwm.ChangeDutyCycle(0)
         def pour(pwm):
             for _ in range(10):
-                setAngle(0,pwm)
-                setAngle(180,pwm)
-            setAngle(0,pwm)
-
+                self.setAngle(0,pwm)
+                self.setAngle(180,pwm)
+            self.setAngle(0,pwm)
         print(self.coffeechoice,"was chosen. Pouring the beans")
         if self.coffeechoice=="darkroast":
             pour(self.servo1)
@@ -141,38 +125,6 @@ class BrewCoffee():
         display = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
         display.fill(0)
         display.show()
-    
-
-    '''
-    others
-    '''
-    def waitToBoil(self):
-        '''
-        Sets timer to wait for water to boil
-        '''
-        print("Waiting 8 minutes for water to boil")
-        time.sleep(480)
-
-    def steep(self):
-        '''
-        After coffee mixed in french press, sets timer for steeping the beans before the coffee is ready
-        '''
-        print("steeping for 4 minutes")
-        time.sleep(240)
-        
-    def mix(self):
-        '''
-        GPIO-21 is Mixer
-        '''
-        print("Mix Coffee")
-        try:
-            GPIO.output(21, GPIO.LOW)
-            time.sleep(15)
-            GPIO.output(21, GPIO.HIGH)
-        except:
-            print("Quit mix")
-            # Reset GPIO settings
-            GPIO.cleanup()
 
     def displayFace(self):
         '''
@@ -185,38 +137,6 @@ class BrewCoffee():
         image = (Image.open('static/images/Poe.jpg').resize((display.width, display.height), Image.BICUBIC).convert("1"))
         display.image(image)
         display.show()
-    
-    def startHotWater(self):
-        '''
-        Starts boiling water in electric kettle
-        '''
-        print("starting hot water")
-    
-    def pourWater(self):
-        '''
-        Pours hot water into French Press
-        '''
-        def setAngle(angle,pwm):
-            duty = angle / 18 + 2
-            GPIO.output(5, True)
-            pwm.ChangeDutyCycle(duty)
-            time.sleep(1)
-            GPIO.output(5, False)
-            pwm.ChangeDutyCycle(0)
-        def pour(pwm,tm):
-            setAngle(0,pwm)
-            print("pouring hot water")
-            setAngle(90,pwm)
-            time.sleep(tm)
-            setAngle(0,pwm)
-        try:
-            print("pouring water started")
-            pour(self.water_pourer_servo,6)
-            self.water_pourer_servo.stop()
-        except:
-            print("Quit pour water")
-            GPIO.cleanup()
-
 
 
         
