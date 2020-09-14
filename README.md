@@ -45,9 +45,9 @@ Each servo controls an individual coffee bean dispenser. These coffee bean dispe
 
 #### 3D-Printed Parts
 
-* OLED Screen - [Thingiverse STL Link](https://www.thingiverse.com/thing:2176764) 
-* Custom Servo Mount - See stls Folder
-* Custom Servo Closing Lever - See stls Folder
+* OLED Screen — [Thingiverse STL Link](https://www.thingiverse.com/thing:2176764) 
+* Custom Servo Mount — See stls Folder
+* Custom Servo Closing Lever — See stls Folder
 
 #### Raspberry Pi & Wiring
 
@@ -57,16 +57,27 @@ Each servo controls an individual coffee bean dispenser. These coffee bean dispe
 * Resistors 
 * 8-channel Relay
 
+<p align="center">
+<img src="static/gifs/ElectronicContainer.png" width="50%" alt="png">
+</p>
+
 The breadboard has a separate power supply which powers the servos and oled display. The servos signal wire is placed in the breadboard where it connected to a resistor and to it's respective GPIO pin on the Raspberry Pi.
+<p align="center">
+<img src="static/gifs/Breadboard.png" width="50%" alt="png">
+</p>
+<p align="center">
+<img src="static/gifs/RaspberryPi.png" width="50%" alt="png">
+</p>
+<br>
 <br>
 The 8-channel Relay was used for a previous iteration but it could still be used to plug the drip coffee machine into and an extra member function for the BrewCoffee class which turns the machine on before brewing and off when it is not in use to save power.
 
 #### Software
 The main files are
-* coffeecontrol.py —  This holds the BrewCoffee class that handles all the logic of the coffee machine
-* twitter.py - Controls the Twitter Voting System
-* siricontrol.py - Allowing Siri voice commands using Sanjeet Chatterjee's open source code
-* modules/coffeeModule.py - The module for the siricontrol which triggers the coffee machine with the words "make coffee"
+* **coffeecontrol.py** — This holds the BrewCoffee class that handles all the logic of the coffee machine
+* **twitter.py** — Controls the Twitter Voting System
+* **siricontrol.py** — Allowing Siri voice commands using Sanjeet Chatterjee's open source code
+* **modules/coffeeModule.py** — The module for the siricontrol which triggers the coffee machine with the words "make coffee"
 
 ### Demonstration Video
 #### Coffee Beans Pouring
