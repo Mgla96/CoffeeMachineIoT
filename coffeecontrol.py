@@ -12,14 +12,16 @@ class BrewCoffee():
     def __init__(self, coffeechoice):
         self.coffeechoice=coffeechoice.lower()
         GPIO.setmode(GPIO.BCM)
+        '''
         #SETTING UP RELAYS
         gpioList = [26, 19, 13, 6, 12, 16, 20, 21]
         for i in gpioList:
             GPIO.setup(i, GPIO.OUT)
             GPIO.output(i, GPIO.HIGH)
+        '''
         #SETTING UP SERVOS
         #Dark Roast
-        GPIO.setup(4,GPIO.OUT)
+        GPIO.setup(4,GPIO.OUT) 
         self.servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse    
         self.servo1.start(0)
         #Medium Roast
@@ -30,11 +32,11 @@ class BrewCoffee():
         GPIO.setup(17,GPIO.OUT)
         self.servo3 = GPIO.PWM(17,50) 
         self.servo3.start(0)
-       
+        #Close Top
         GPIO.setup(18,GPIO.OUT)
         self.close_top_servo = GPIO.PWM(18,50) 
         self.close_top_servo.start(0)
-
+        #Brew Starter
         GPIO.setup(8,GPIO.OUT)
         self.start_brew_servo = GPIO.PWM(8,50)
         self.start_brew_servo.start(0)

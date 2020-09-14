@@ -39,10 +39,7 @@ class Twitter():
         else:
             print("nobody voted :(")
             return (mx[0],mx[1])
-        '''
-        for key in choice.keys():
-            print(key)
-        '''
+
 if __name__=="__main__":
     twit=Twitter()
     coffee_choice,amount_votes=twit.getVote()

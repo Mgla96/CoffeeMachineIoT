@@ -5,7 +5,7 @@ import time
 if __name__=="__main__":
     twit=Twitter()
     coffee_choice,amount_votes=twit.getVote()
-    #coffee_choice,amount_votes="mediumroast",1
+    #coffee_choice,amount_votes="darkroast",1
     brew=BrewCoffee(coffee_choice)
     print(coffee_choice,amount_votes)
     brew.displayCoffeeChoice(coffee_choice,amount_votes)
