@@ -10,7 +10,7 @@ This is an automated IoT Coffee Machine I built that is controlled by a Raspberr
 <br>
 Siri is implemented through SiriControl an open source framework created by Sanjeet Chatterjee.
 
-### Mechanics
+### Hardware
 
 #### Coffee Bean Dispenser
 Each servo controls an individual coffee bean dispenser. These coffee bean dispensers are made up of Pringles cans for the top and fruit cans for the bottom. The servo is fixed on the fruit can and rotates the Pringles can. Both the fruit can and Pringles can have holes cut in them so during rotation of the Pringles can, these holes line up and the coffee beans fall out into the coffee machine.
@@ -72,7 +72,7 @@ The breadboard has a separate power supply which powers the servos and oled disp
 <br>
 The 8-channel Relay was used for a previous iteration but it could still be used to plug the drip coffee machine into and an extra member function for the BrewCoffee class which turns the machine on before brewing and off when it is not in use to save power.
 
-#### Software
+### Software
 The main files are
 * **coffeecontrol.py** — This holds the BrewCoffee class that handles all the logic of the coffee machine
 * **twitter.py** — Controls the Twitter Voting System
