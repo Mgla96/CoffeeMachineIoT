@@ -50,19 +50,27 @@ Each servo controls an individual coffee bean dispenser. These coffee bean dispe
 * Custom Servo Closing Lever - See stls Folder
 
 ### Demonstration Video
-
+#### Coffee Beans Pouring
 <p align="center">
 <img src="static/gifs/coffee_demo_1.gif" width="50%" alt="gif">
 </p>
+
+#### Lid Closing And Brew Starting
 <p align="center">
 <img src="static/gifs/coffee_demo_2.gif" width="50%" alt="gif">
 </p>
+
+#### OLED Screen Display
 <p align="center">
 <img src="static/gifs/coffee_demo_3.gif" width="50%" alt="gif">
 </p>
+
+#### Closer Look At Start Button Servo
 <p align="center">
 <img src="static/gifs/coffee_demo_4.gif" width="50%" alt="gif">
 </p>
+
+#### Coffee Good To Go
 <p align="center">
 <img src="static/gifs/coffee_demo_5.gif" width="50%" alt="gif">
 </p>
