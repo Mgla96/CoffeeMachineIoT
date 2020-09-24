@@ -11,16 +11,8 @@ from PIL import Image, ImageDraw, ImageFont
 class BrewCoffee():
     def __init__(self, coffeechoice):
         self.coffeechoice=coffeechoice.lower()
-        GPIO.setmode(GPIO.BCM)
-        '''
-        #SETTING UP RELAYS
-        gpioList = [26, 19, 13, 6, 12, 16, 20, 21]
-        for i in gpioList:
-            GPIO.setup(i, GPIO.OUT)
-            GPIO.output(i, GPIO.HIGH)
-        '''
-        #SETTING UP SERVOS
-        #Dark Roast
+        GPIO.setmode(GPIO.BCM) 
+        #Dark Roast - Servo Setup
         GPIO.setup(4,GPIO.OUT) 
         self.servo1 = GPIO.PWM(4,50) # Note 4 is pin, 50 = 50Hz pulse    
         self.servo1.start(0)

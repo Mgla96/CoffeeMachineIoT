@@ -12,8 +12,6 @@ class Twitter():
         self.api=tweepy.API(auth)
     def getVote(self):
         mentions = self.api.mentions_timeline()
-        #print(type(mentions[0]))
-        #print(mentions[0].__dict__.keys())
         choice={}
         mx=["",0]
         current_utc = datetime.datetime.utcnow()
